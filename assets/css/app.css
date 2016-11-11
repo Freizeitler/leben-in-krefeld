@@ -1,0 +1,412 @@
+/**
+* Settings
+*
+* @desc Place variables and mixings for default settings here
+* @author [XX]
+* @dependency none
+*/
+/** Easings, grabbed from https://css-tricks.com/snippets/sass/easing-map-get-function/
+ *
+ * Example function call:
+	.example {
+	  animation: there-and-back 2.5s ease(in-quad) infinite alternate;
+	}
+**/
+/**
+* Basic Styles
+*
+* @desc Basic and common styles. Formats for every device live in Common Styles, for device-specific stylings use Mobile First approach.
+* @author [HZ]
+* @dependency _app_settings.scss
+*/
+/* line 10, ../scss/_base.scss */
+body, html {
+  margin: 0;
+  height: 100%;
+  font: normal 1em/1.4 "Trebuchet MS", Helvetica, sans-serif;
+  color: #1e1e1e;
+}
+
+/* line 16, ../scss/_base.scss */
+body {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* line 21, ../scss/_base.scss */
+h1, h2 {
+  margin: 0;
+  font-weight: normal;
+}
+
+/* line 26, ../scss/_base.scss */
+h1 {
+  font-size: 1.6em;
+}
+/* line 29, ../scss/_base.scss */
+h1 span {
+  font-size: 0.6em;
+}
+
+/* line 34, ../scss/_base.scss */
+h3 {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+/* line 39, ../scss/_base.scss */
+p {
+  margin-top: 0;
+}
+
+/* line 43, ../scss/_base.scss */
+strong {
+  color: #21538e;
+}
+
+/* line 47, ../scss/_base.scss */
+input[type=checkbox], input[type=text] {
+  background: #e4eaf1;
+  width: 30px;
+  height: 30px;
+  border: 4px solid #7a98bb;
+  box-sizing: border-box;
+  position: relative;
+  bottom: -12px;
+  -webkit-appearance: inherit;
+  border-radius: 3px;
+}
+
+/* line 59, ../scss/_base.scss */
+input[type=text] {
+  width: 100%;
+}
+
+/* line 65, ../scss/_base.scss */
+label:hover {
+  cursor: pointer;
+}
+
+/* line 70, ../scss/_base.scss */
+.main {
+  min-width: 400vw;
+  height: 100%;
+  transition: -webkit-transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+  transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+/* line 77, ../scss/_base.scss */
+.app {
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* line 1, ../patterns/organisms/header/scss/_header.scss */
+.header {
+  background: linear-gradient(to bottom, #21538e 50%, #7a98bb 100%);
+  height: 100px;
+  width: 100vw;
+  color: #fff;
+  padding: 0 30px;
+  position: absolute;
+  box-sizing: border-box;
+}
+/* line 10, ../patterns/organisms/header/scss/_header.scss */
+.header__headline {
+  margin-top: 5px;
+}
+
+/* line 1, ../patterns/organisms/menu-category/scss/_menu-category.scss */
+.menu-category {
+  color: #fff;
+  margin-top: 60px;
+  margin-left: 20px;
+  position: relative;
+  z-index: 2;
+  padding: 10px;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px 3px 0 0;
+}
+/* line 14, ../patterns/organisms/menu-category/scss/_menu-category.scss */
+.menu-category:nth-of-type(1):checked ~ .main {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+/* line 21, ../patterns/organisms/menu-category/scss/_menu-category.scss */
+.menu-category:nth-of-type(2):checked ~ .main {
+  -webkit-transform: translate3d(-100vw, 0, 0);
+          transform: translate3d(-100vw, 0, 0);
+}
+/* line 28, ../patterns/organisms/menu-category/scss/_menu-category.scss */
+.menu-category:nth-of-type(3):checked ~ .main {
+  -webkit-transform: translate3d(-200vw, 0, 0);
+          transform: translate3d(-200vw, 0, 0);
+}
+/* line 35, ../patterns/organisms/menu-category/scss/_menu-category.scss */
+.menu-category:nth-of-type(4):checked ~ .main {
+  -webkit-transform: translate3d(-300vw, 0, 0);
+          transform: translate3d(-300vw, 0, 0);
+}
+
+/* line 41, ../patterns/organisms/menu-category/scss/_menu-category.scss */
+input.menu-category {
+  position: absolute;
+  z-index: -1;
+}
+/* line 47, ../patterns/organisms/menu-category/scss/_menu-category.scss */
+input.menu-category:checked + label, input.menu-category:focus + label {
+  background: #fff;
+  color: #21538e;
+}
+/* line 55, ../patterns/organisms/menu-category/scss/_menu-category.scss */
+input.menu-category:focus + label {
+  text-decoration: underline;
+}
+
+/* line 1, ../patterns/organisms/category-section/scss/_category-section.scss */
+.category-section {
+  height: 100%;
+  width: 100vw;
+  overflow-y: auto;
+  padding-bottom: 90px;
+  box-sizing: border-box;
+}
+/* line 8, ../patterns/organisms/category-section/scss/_category-section.scss */
+.category-section__headline {
+  padding: 5px 20px;
+  background: #7a98bb;
+  color: #fff;
+}
+/* line 14, ../patterns/organisms/category-section/scss/_category-section.scss */
+.category-section__filter-headline {
+  padding-left: 20px;
+  display: block;
+  margin-bottom: -10px;
+}
+
+/* line 21, ../patterns/organisms/category-section/scss/_category-section.scss */
+.menu-category-filter {
+  margin: 0 0 0 20px;
+}
+/* line 24, ../patterns/organisms/category-section/scss/_category-section.scss */
+.menu-category-filter:checked ~ .teaser-section .teaser-section__teaser {
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+}
+/* line 31, ../patterns/organisms/category-section/scss/_category-section.scss */
+.menu-category-filter[data-filter=one]:checked ~ .teaser-section .teaser-section__teaser[data-tag=beginner], .menu-category-filter[data-filter=two]:checked ~ .teaser-section .teaser-section__teaser[data-tag=advanced], .menu-category-filter[data-filter=three]:checked ~ .teaser-section .teaser-section__teaser[data-tag=profi] {
+  max-height: 400px;
+  opacity: 1;
+  margin: 10px 0;
+  margin-top: 0;
+  padding: 20px;
+}
+
+/* line 41, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 20px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+/* line 48, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__teaser {
+  margin: 10px 0;
+  padding: 20px 0;
+  border-top: 1px solid #f4f4f4;
+  border-bottom: 1px solid #f4f4f4;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 1200px;
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: 40px;
+}
+@media (min-width: 45.25em) {
+  /* line 48, ../patterns/organisms/category-section/scss/_category-section.scss */
+  .teaser-section__teaser {
+    border: 1px solid #f4f4f4;
+    padding: 20px;
+    padding-bottom: 40px;
+    border-radius: 96px 0 0 0;
+  }
+}
+/* line 68, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__teaser[aria-hidden=true] .teaser-section__more-button {
+  display: none;
+}
+/* line 74, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__headline {
+  color: #21538e;
+  margin-bottom: 0;
+}
+/* line 79, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__tags {
+  font-size: 0.8em;
+  font-style: italic;
+}
+/* line 84, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__image {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  max-width: 100%;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+@media (min-width: 45.25em) {
+  /* line 84, ../patterns/organisms/category-section/scss/_category-section.scss */
+  .teaser-section__image {
+    width: 150px;
+    height: 150px;
+  }
+}
+/* line 99, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__icon-smiley {
+  fill: #e4eaf1;
+}
+/* line 103, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__more-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  padding-right: 30px;
+  padding-left: 60px;
+  font-weight: bold;
+  padding-top: 4px;
+  background-color: #e4eaf1;
+  color: #21538e;
+  height: 30px;
+  box-sizing: border-box;
+}
+/* line 118, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__more-button.teaser-section__more-button {
+  clear: left;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+/* line 125, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__more-button.teaser-section__more-button:checked ~ .teaser-section__more {
+  max-height: 400px;
+  margin-top: 1em;
+}
+/* line 131, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__more {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+/* line 138, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section__unit {
+  display: inline-block;
+  background-color: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+/* line 145, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section dt {
+  font-weight: bold;
+}
+/* line 149, ../patterns/organisms/category-section/scss/_category-section.scss */
+.teaser-section dd {
+  margin-left: 0;
+  margin-bottom: 1em;
+}
+
+/* line 156, ../patterns/organisms/category-section/scss/_category-section.scss */
+.search-bar {
+  padding: 10px 20px;
+  background-color: #e4eaf1;
+  margin-bottom: 10px;
+}
+/* line 161, ../patterns/organisms/category-section/scss/_category-section.scss */
+.search-bar__input[type=text] {
+  bottom: 0;
+  padding: 5px 10px;
+  font-size: 1.2em;
+  color: #21538e;
+  background-color: #fff;
+  height: auto;
+  border: none;
+  max-width: 1200px;
+}
+/* line 171, ../patterns/organisms/category-section/scss/_category-section.scss */
+.search-bar__input[type=text]::-webkit-input-placeholder {
+  color: #e4eaf1;
+  font-style: italic;
+}
+.search-bar__input[type=text]::-moz-placeholder {
+  color: #e4eaf1;
+  font-style: italic;
+}
+.search-bar__input[type=text]:-ms-input-placeholder {
+  color: #e4eaf1;
+  font-style: italic;
+}
+.search-bar__input[type=text]::placeholder {
+  color: #e4eaf1;
+  font-style: italic;
+}
+
+@-webkit-keyframes wait {
+  0% {
+    max-width: 0;
+  }
+  10% {
+    max-width: 0;
+  }
+  80% {
+    max-width: 3em;
+  }
+  100% {
+    max-width: 3em;
+  }
+}
+
+@keyframes wait {
+  0% {
+    max-width: 0;
+  }
+  10% {
+    max-width: 0;
+  }
+  80% {
+    max-width: 3em;
+  }
+  100% {
+    max-width: 3em;
+  }
+}
+/* line 31, ../patterns/organisms/message/scss/_message.scss */
+.message {
+  margin: 5px 20px;
+  max-height: 60px;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+/* line 7, ../patterns/organisms/message/scss/_message.scss */
+.message__status {
+  color: #6c0505;
+}
+/* line 11, ../patterns/organisms/message/scss/_message.scss */
+.message.hide {
+  max-height: 0;
+}
+
+/*# sourceMappingURL=app.css.map */
