@@ -92,13 +92,13 @@
     targetMessage.classList.add('hide');
 
     // make request
-    function makeRequest(url, callback) {
+    var makeRequest = function (url, callback) {
       httpRequest = new XMLHttpRequest();
-      console.log(callback, url, httpRequest.readyState, httpRequest.status);
-
       httpRequest.open('GET', url);
       httpRequest.send();
       httpRequest.onreadystatechange = callback;
+
+      console.log('makeRequest: ', httpRequest.readyState, httpRequest.status);
 
       // fallback for httpRequest
       if (!httpRequest) {
@@ -131,7 +131,7 @@
 
     // insert detail template
     function insertDetailTemplate(detailTarget, detailDataset) {
-      console.log('trmplate!');
+      console.log('--- template! ---');
        detailTarget.insertAdjacentHTML('afterbegin',
         '<dl>' +
         '<dt>Wo wird veranstaltet?</dt>' +
@@ -144,7 +144,7 @@
 
     // TODO: fetch and generate Details
     function generateDetails(detailTarget) {
-      console.log(httpRequest.readyState, httpRequest.status);
+      console.log('generateDeatils: ', httpRequest.readyState, httpRequest.status);
 
       if (httpRequest.readyState === httpRequest.DONE) {
         if (httpRequest.status === 200) {
@@ -152,8 +152,8 @@
           var detailTargetSpec = document.getElementsByClassName(detailTarget);
 
           var detailDataset = {
-            //locationCity: detailData.LocationCity || 'no data',
-            locationCity: detailData[0].DocName || 'no data',
+            locationCity: detailData.LocationCity || 'no data',
+            // locationCity: detailData[0].DocName || 'no data',
             LocationName: detailData.LocationName || 'no data',
             LocationStreetAddress: detailData.LocationStreetAddress || 'no data',
             LocationZIP: detailData.LocationZIP || 'no data',
@@ -174,8 +174,8 @@
 
     // generate main content
     function generateContents() {
-      console.log(httpRequest.readyState, httpRequest.status);
-      
+      console.log('generateContents: ', httpRequest.readyState, httpRequest.status);
+
       if (httpRequest.readyState === httpRequest.DONE) {
         if (httpRequest.status === 200) {
           var data = JSON.parse(httpRequest.responseText);
@@ -213,7 +213,6 @@
 
     // click for details
     function clickDetails(detailUrl, detailTarget) {
-      httpRequest = new XMLHttpRequest();
       makeRequest('' + detailUrl + '', generateDetails(detailTarget));
     };
 
