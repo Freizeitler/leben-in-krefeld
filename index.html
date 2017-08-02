@@ -82,8 +82,8 @@
 
 <script type="text/javascript">
   // template engine
-  (function() {
     'use strict';
+    
     var httpRequest;
     var targetMessage = document.getElementById('jsMessage');
 
@@ -105,19 +105,19 @@
 
     // insert teaser template
     function insertTemplate(articleTarget, dataset, i) {
-      articleTarget.insertAdjacentHTML('beforeend',
+      articleTarget.insertAdjacentHTML('afterbegin',
         '<article class="teaser-section__teaser" data-tag="' + dataset.id + '" data-id="' + dataset.id + '">' +
         setImage(dataset) +
         '<div  class="teaser-section__text search-content">' +
         '<h3 class="teaser-section__headline">' + dataset.title + '</h3>' +
-        '<p class="teaser-section__tags"><strong>Veranstaltung:</strong> <em>' + getTags(dataset) + '</em></p>' +
+        '<p class="teaser-section__tags"><strong>Art der Veranstaltung:</strong> <em>' + getTags(dataset) + '</em></p>' +
         formatDate(dataset) +
         '<p class="teaser-section__description">' + dataset.description + '</p>' +
-        '<label for="learn-more'+ i + '" class="teaser-section__more-label js-more-details"><input type="checkbox" class="teaser-section__more-button" name="learn-more' + i + '" id="learn-more' +i + '" /> Mehr darüber</label>' +
+        '<label for="learn-more' + i + '" class="teaser-section__more-label js-more-details" onclick="clickDetails(\'' + dataset.infoUrl.toString() + '\');"><input type="checkbox" class="teaser-section__more-button" name="learn-more' + i + '" id="learn-more' + i + '" /> Mehr darüber</label>' +
         '<dl class="teaser-section__more">' +
         // more details here:
         '<dt>Weitere Infos:</dt>' +
-        '<dd>' + dataset.infoUrl + '</dd>' +
+        '<dd class="js-more-details-target"></dd>' +
         '</dl>' +
         '</div>' +
         '</article>'
@@ -168,14 +168,13 @@
     }
 
     // TODO: fetch and generate Details
-    function generateDetails(i) {
-      var detailUrl = '../data/data-detail-offline.json';
+    function generateDetails(detailUrl, i) {
       if (httpRequest.readyState === XMLHttpRequest.DONE) {
         if (httpRequest.status === 200) {
           var data = JSON.parse(httpRequest.responseText);
-          var dataset;
+          var detailDataset;
 
-          console.log(dataset);
+          console.log(detailDataset);
 
         } else {
           targetMessage.classList.remove('hide');
@@ -203,7 +202,7 @@
               title: data[i].DocName || '-',
               subtitle: data[i].EventSubTitle || '-',
               description: data[i].Kurztext || '-',
-              infoUrl: data[i].URL || '#',
+              infoUrl: 'https://crossorigin.me/https://www.krefeld.de/' + data[i].URL || '#',
               thumb:  data[i].Thumb,
               startDate: data[i].Start || 'unbekannt',
               endDate: data[i].End || 'unbekannt',
@@ -220,38 +219,35 @@
         }
       }
     }
-    makeRequest('https://www.krefeld.de/www_familie/event.nsf/apijson.xsp/view-event-month?compact=false');
+    makeRequest('https://crossorigin.me/https://www.krefeld.de/www_familie/event.nsf/apijson.xsp/view-event-month?compact=false', generateContents);
     //makeRequest('../data/data-offline.json', generateContents);
 
     // live search
     function liveSearch() {
       var search = document.getElementById('search');
       search.onkeyup = function () {
-          var filter = search.value.toUpperCase();
-          var lis = document.getElementsByTagName('article');
-          for (var i = 0; i < lis.length; i++) {
-              var target = lis[i].getElementsByClassName('search-content')[0];
-              var content = target.textContent;
-              if (content.toUpperCase().indexOf(filter) > -1) {
-                  lis[i].style.display = 'block';
-              } else {
-                  lis[i].style.display = 'none';
-                }
-          }
+        var filter = search.value.toUpperCase();
+        var lis = document.getElementsByTagName('article');
+        for (var i = 0; i < lis.length; i++) {
+            var target = lis[i].getElementsByClassName('search-content')[0];
+            var content = target.textContent;
+            if (content.toUpperCase().indexOf(filter) > -1) {
+                lis[i].style.display = 'block';
+            } else {
+                lis[i].style.display = 'none';
+              }
         }
-      };
-    liveSearch();
-
-    document.getElementsByClassName('js-more-details').onclick = function() {
-      console.log('checked');
-      if (this.checked) {
-        makeRequest(detailUrl, generateDetails);
       }
     };
-  })();
+    liveSearch();
+    
+    // click for details
+    function clickDetails(detailUrl) {
+      console.log(detailUrl);
+      makeRequest(detailUrl, generateDetails);
+    };
 
   // accessibility
-  (function() {
     var section1 = document.getElementById('jsSection1');
     var section2 = document.getElementById('jsSection2');
     var section1Inputs = section1.getElementsByTagName('input');
@@ -277,6 +273,7 @@
     window.onload = setInitialNotActive;
 
     // aria controls
+    /*
     catMenu1.onfocus = function() {
       section1.setAttribute('aria-hidden', 'false');
       section2.setAttribute('aria-hidden', 'true');
@@ -340,7 +337,7 @@
         }
       }
     };
-  })();
+    */
 </script>
 
 
