@@ -87,7 +87,6 @@
     'use strict';
 
     var httpRequest;
-    var httpRequestDetail;
     var targetMessage = document.getElementById('jsMessage');
 
     targetMessage.classList.add('hide');
@@ -95,29 +94,18 @@
     // make request
     function makeRequest(url, callback) {
       httpRequest = new XMLHttpRequest();
+      console.log(callback, url, httpRequest.readyState, httpRequest.status);
 
+      httpRequest.open('GET', url);
+      httpRequest.send();
+      httpRequest.onreadystatechange = callback;
+
+      // fallback for httpRequest
       if (!httpRequest) {
         targetMessage.classList.remove('hide');
         document.getElementById('jsStatus').textContent = 'Sorry, I need a connection!';
         return false;
       }
-      httpRequest.onreadystatechange = callback;
-      httpRequest.open('GET', url);
-      httpRequest.send();
-    }
-
-    // make detail request
-    function makeDetailRequest(url, callback) {
-      httpRequestDetail = new XMLHttpRequest();
-
-      if (!httpRequestDetail) {
-        targetMessage.classList.remove('hide');
-        document.getElementById('jsStatus').textContent = 'Sorry, I need a connection!';
-        return false;
-      }
-      httpRequestDetail.onreadystatechange = callback;
-      httpRequestDetail.open('GET', url);
-      httpRequestDetail.send();
     }
 
     // insert teaser template
@@ -130,7 +118,7 @@
         '<p class="teaser-section__tags"><strong>Art der Veranstaltung:</strong> <em>' + getTags(dataset) + '</em></p>' +
         formatDate(dataset) +
         '<p class="teaser-section__description">' + dataset.description + '</p>' +
-        '<label for="learn-more' + i + '" class="teaser-section__more-label js-more-details" onclick="clickDetails(\'' + dataset.infoUrl.toString() + '\', \'js-more-details-target' + dataset.id + '\');"><input type="checkbox" class="teaser-section__more-button" name="learn-more' + i + '" id="learn-more' + i + '" /> Mehr darüber</label>' +
+        '<label for="learn-more' + i + '" class="teaser-section__more-label js-more-details" onmouseup="clickDetails(\'' + dataset.infoUrl.toString() + '\', \'js-more-details-target' + dataset.id + '\');"><input type="checkbox" class="teaser-section__more-button" name="learn-more' + i + '" id="learn-more' + i + '" /> Mehr darüber</label>' +
         '<dl class="teaser-section__more">' +
         // more details here:
         '<dt>Weitere Infos:</dt>' +
@@ -141,31 +129,40 @@
       );
     }
 
+    // insert detail template
+    function insertDetailTemplate(detailTarget, detailDataset) {
+      console.log('trmplate!');
+       detailTarget.insertAdjacentHTML('afterbegin',
+        '<dl>' +
+        '<dt>Wo wird veranstaltet?</dt>' +
+        '<dd>' + detailDataset.LocationName + ', ' + detailDataset.LocationStreetAddress + ', ' + detailDataset.LocationZIP + ' ' + detailDataset.locationCity + '</dd>' +
+        '<dt>Wer veranstaltet?</dt>' +
+        '<dd>' + detailDataset.VeranstalterName + ', ' + detailDataset.VeranstalterEMail + ', ' + detailDataset.VeranstalterWebSite + '</dd>' +
+        '</dl>'
+      );
+    }
+
     // TODO: fetch and generate Details
     function generateDetails(detailTarget) {
-      if (httpRequestDetail.readyState === XMLHttpRequest.DONE) {
-        if (httpRequestDetail.status === 200) {
-          var data = JSON.parse(httpRequestDetail.responseText);
-          var detailDataset = {
-            locationCity: data.LocationCity || 'no data',
-            LocationName: data.LocationName || 'no data',
-            LocationStreetAddress: data.LocationStreetAddress || '-',
-            LocationZIP: data.LocationZIP || 'no data',
-            VeranstalterName: data.VeranstalterName || 'no data',
-            VeranstalterEMail: data.VeranstalterEMail || 'no data',
-            VeranstalterWebSite: data.VeranstalterWebSite || 'no data'
-          };
-          var detailTargetSpec = document.getElementsByClassName(detailTarget);
-          //console.log(detailTarget);
+      console.log(httpRequest.readyState, httpRequest.status);
 
-          detailTargetSpec[0].insertAdjacentHTML('afterbegin',
-            '<dl>' +
-            '<dt>Wo wird veranstaltet?</dt>' +
-            '<dd>' + detailDataset.LocationName + ', ' + detailDataset.LocationStreetAddress + ', ' + detailDataset.LocationZIP + ', ' + detailDataset.locationCity + '</dd>' +
-            '<dt>Wer veranstaltet?</dt>' +
-            '<dd>' + detailDataset.VeranstalterName + ', ' + detailDataset.VeranstalterEMail + ', ' + detailDataset.VeranstalterWebSite + '</dd>' +
-            '</dl>'
-          );
+      if (httpRequest.readyState === httpRequest.DONE) {
+        if (httpRequest.status === 200) {
+          var detailData = JSON.parse(httpRequest.responseText);
+          var detailTargetSpec = document.getElementsByClassName(detailTarget);
+
+          var detailDataset = {
+            //locationCity: detailData.LocationCity || 'no data',
+            locationCity: detailData[0].DocName || 'no data',
+            LocationName: detailData.LocationName || 'no data',
+            LocationStreetAddress: detailData.LocationStreetAddress || 'no data',
+            LocationZIP: detailData.LocationZIP || 'no data',
+            VeranstalterName: detailData.VeranstalterName || 'no data',
+            VeranstalterEMail: detailData.VeranstalterEMail || 'no data',
+            VeranstalterWebSite: detailData.VeranstalterWebSite || 'no data'
+          };
+
+          insertDetailTemplate(detailTargetSpec[0], detailDataset);
 
         } else {
           targetMessage.classList.remove('hide');
@@ -177,7 +174,9 @@
 
     // generate main content
     function generateContents() {
-      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      console.log(httpRequest.readyState, httpRequest.status);
+      
+      if (httpRequest.readyState === httpRequest.DONE) {
         if (httpRequest.status === 200) {
           var data = JSON.parse(httpRequest.responseText);
           var dataset;
@@ -211,12 +210,11 @@
         }
       }
     }
-    makeRequest('https://crossorigin.me/https://www.krefeld.de/www_familie/event.nsf/apijson.xsp/view-event-month?compact=false', generateContents);
 
     // click for details
     function clickDetails(detailUrl, detailTarget) {
-      console.log(detailUrl);
-      makeDetailRequest(detailUrl, generateDetails(detailTarget));
+      httpRequest = new XMLHttpRequest();
+      makeRequest('' + detailUrl + '', generateDetails(detailTarget));
     };
 
     // live search
@@ -236,7 +234,6 @@
         }
       }
     };
-    liveSearch();
 
     function getTags(dataset) {
       var allTags = dataset.tags.toString();
@@ -372,6 +369,10 @@
       }
     };
     */
+
+    // Init
+    makeRequest('https://crossorigin.me/https://www.krefeld.de/www_familie/event.nsf/apijson.xsp/view-event-month?compact=true', generateContents);
+    liveSearch();
 
   </script>
 
