@@ -274,13 +274,13 @@ input.menu-category:focus + label {
 /* line 118, ../patterns/organisms/category-section/scss/_category-section.scss */
 .teaser-section__more-button.teaser-section__more-button {
   clear: left;
-  position: relative;
+  position: absolute;
   left: 0;
   top: 0;
-  margin: 0;
+  margin: 0;}
 }
 /* line 125, ../patterns/organisms/category-section/scss/_category-section.scss */
-.teaser-section__more-button.teaser-section__more-button:checked + .teaser-section__more {
+.teaser-section__more-button.teaser-section__more-button:checked ~ .teaser-section__more {
   max-height: 400px;
   margin-top: 1em;
 }
