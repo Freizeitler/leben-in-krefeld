@@ -1,0 +1,63 @@
+#301er
+RedirectMatch 301 ^/2008/08/css-ein-3-spalter-div-layout/ http://www.freizeitler.de/blog/2008/06/04/css-template-eine-3-spalter-div-vorlage/?
+RedirectMatch 301 ^/2008/08/dreamweaver-listall-und-breakall-erweiterung/ http://www.freizeitler.de/blog/2010/08/09/kleine-werkzeugkunde-die-api-von-dreamweaver/?
+RedirectMatch 301 ^/2008/09/css-ie6-und-hover-vertikales-karteikarten-reiter-menu-zum-downloaden/ http://www.freizeitler.de/blog/2008/11/09/css-der-ie6-mit-hover-und-ein-vertikales-karteikarten-reiter-menue/?
+RedirectMatch 301 ^/2009/01/html-die-popularsten-web-fonts-im-vergleich/ http://www.freizeitler.de/blog/2009/01/04/html-die-gaengigen-web-fonts-im-vergleich/?
+RedirectMatch 301 ^/2009/03/html-was-bedeutet-eigentlich-semantik/ http://www.freizeitler.de/blog/2009/03/12/html-was-bedeutet-eigentlich-semantik/?
+RedirectMatch 301 ^/2009/04/css-ein-vertikales-undoder-horizontales-dropdown-menu/ http://www.freizeitler.de/blog/2009/04/10/css-ein-vertikales-und-oder-horizontales-dropdown-menue/?
+RedirectMatch 301 ^/2009/07/css-highlighting-boxes-produkte-hervorheben-mit-hover/ http://www.freizeitler.de/blog/2009/07/09/css-highlighting-boxes-produkte-hervorheben-mit-hover/?
+RedirectMatch 301 ^/2009/08/html-farbliche-konzeption-im-sinne-des-w3c-wcag-20/ http://www.freizeitler.de/blog/2009/08/14/webkrauts-kontrastreiche-farbwelten/?
+RedirectMatch 301 ^/2009/12/kurz-notiert-und-der-user-scrollt-doch/ http://www.freizeitler.de/blog/2009/12/15/frontend-und-der-user-scrollt-doch/?
+RedirectMatch 301 ^/2010/03/kurz-notiert-platz-16-beim-css-off-von-css-tricks/ http://www.freizeitler.de/blog/2010/03/22/css-plat-16-beim-css-off-von-css-tricks/?
+RedirectMatch 301 ^/2010/07/social-micro-payment-flattr-zartlich-danke-%E2%99%A5/ http://www.freizeitler.de/blog/2010/07/22/social-micro-payment-flattr-zaertlich-danke/?
+RedirectMatch 301 ^/2010/07/kurz-notiert-neue-webschriften-mit-google-font-api/ http://www.freizeitler.de/blog/2010/07/29/typographie-neue-webschriften-mit-google-font-api/?
+RedirectMatch 301 ^/2010/08/kurz-notiert-die-suche-nach-der-smart-sticky-floating-box/ http://www.freizeitler.de/blog/2010/08/06/jquery-die-suche-nach-der-smart-sticky-floating-box/?
+RedirectMatch 301 ^/2010/09/typografie-schriftsatz-im-webdesign-die-theoretischen-grundlagen/ http://www.freizeitler.de/blog/2010/09/23/typografie-schriftsatz-im-webdesign-die-theoretischen-grundlagen/?
+RedirectMatch 301 ^/2010/10/data-storage-kostenloser-speicherplatz-im-netz/ http://www.freizeitler.de/blog/2010/10/19/data-storage-kostenloser-speicherplatz-im-netz/?
+RedirectMatch 301 ^/2010/11/adobes-project-rome-eine-fur-alles-neues-multimedia-browser-tool/ http://www.freizeitler.de/blog/2010/11/03/adobes-project-rome-eine-fuer-alles-neues-multimedia-browser-tool/?
+RedirectMatch 301 ^/2010/11/html5-und-css3-immer-nur-am-ball-bleiben-reicht-nicht/ http://www.freizeitler.de/blog/2010/11/24/html5-und-css3-immer-nur-am-ball-bleiben-reicht-nicht/?
+RedirectMatch 301 ^/2010/12/head-js-externe-javascripte-asynchron-laden/ http://www.freizeitler.de/blog/2010/12/06/head.js-externe-javascripts-asynchron-laden/?
+RedirectMatch 301 ^/2011/04/unicode-characters-als-listenpunkte-thierry-koblentz-zeigt-wie-es-geht/ http://www.freizeitler.de/blog/2011/04/28/unicode-characters-als-listenpunkte-thierry-koblentz-zeigt-wie-es-geht/?
+RedirectMatch 301 ^/2011/05/ifttt-automatisiere-dein-netzwerk/ http://www.freizeitler.de/blog/2011/05/02/ifttt-automatisiere-dein-netzwerk/?
+RedirectMatch 301 ^/2011/05/css3-pie-dem-internet-explorer-auf-die-sprunge-helfen/ http://www.freizeitler.de/blog/2011/12/19/css3-pie-dekoratives-mit-und-ohne-css3/?
+RedirectMatch 301 ^/2011/05/chrome-developer-tools-eine-prasentation-der-wichtigsten-funktionen-auf-der-google-io/ http://www.freizeitler.de/blog/2011/05/16/chrome-developer-tools-eine-praesentation-der-wichtigsten-funktionen-auf-der-google-i-o/?
+RedirectMatch 301 ^/2011/05/responsive-webdesign-ist-keine-hexenkunst-ein-kurzer-uberblick/ http://www.freizeitler.de/blog/2011/05/28/responsive-webdesign-ist-keine-hexenkunst-ein-ganz-kurzer-ueberblick/?
+RedirectMatch 301 ^/2011/06/schema-org-google-bing-und-yahoo-unterstutzen-microdata-formate/ http://www.freizeitler.de/blog/2011/12/21/schema-org-sieht-so-das-web-3-0-aus/?
+RedirectMatch 301 ^/2011/07/andere-browser-ein-blick-uber-den-tellerrand/ http://www.freizeitler.de/blog/2011/07/14/andere-browser-ein-blick-ueber-den-tellerrand/?
+RedirectMatch 301 ^/2011/08/scoop-it-ein-eigenes-journal-mit-fundstucken-aus-dem-netz-erstellen/ http://www.freizeitler.de/blog/2011/08/22/scoop-it-ein-eigenes-journal-mit-fundstuecken-aus-dem-netz-erstellen/?
+RedirectMatch 301 ^/2011/09/syntax-highlighting-unser-code-soll-schoner-werden/ http://www.freizeitler.de/blog/2011/09/19/syntax-highlighting-unser-code-soll-schoener-werden/?
+RedirectMatch 301 ^/2011/09/scrolling-parallax-animiertes-scrolling-mit-tiefgang/ http://www.freizeitler.de/blog/2011/09/27/scrolling-parallax-animiertes-scrolling-mit-tiefgang/?
+RedirectMatch 301 ^/2011/10/css-vertikale-fly-out-navi-mit-artikelvorschau-fur-wordpress/ http://www.freizeitler.de/blog/2011/11/29/css-vertikale-fly-out-navi-mit-artikelvorschau-fuer-wordpress/?
+RedirectMatch 301 ^/2012/03/google-hinter-der-timeline-gehts-weiter/ http://www.freizeitler.de/blog/2012/03/03/googleplus-hinter-der-timeline-gehts-weiter/?
+RedirectMatch 301 ^/2012/03/schema-org-und-google-bedeutung-und-implementierung-fur-weblogs-teil-1/ http://www.freizeitler.de/blog/2012/03/23/schema-org-und-googleplus-bedeutung-und-implementierung-fuer-weblogs-teil-1/?
+RedirectMatch 301 ^/2012/03/schema-org-und-google-bedeutung-und-implementierung-fur-weblogs-teil-2/ http://www.freizeitler.de/blog/2012/10/12/schema-org-und-googleplus-bedeutung-und-implementierung-fuer-weblogs-teil-2/?
+RedirectMatch 301 ^/2012/04/svg-und-jquery-interaktive-grafiken-erstellen-mit-inkscape/ http://www.freizeitler.de/blog/2012/04/22/svg-und-jquery-interaktive-grafiken-erstellen-mit-inkscape/
+RedirectMatch 301 ^/2012/05/schema-org-und-google-bedeutung-und-implementierung-fur-weblogs-teil-3/ http://www.freizeitler.de/blog/2012/05/05/schemaorg-und-googleplus-bedeutung-und-implementierung-fuer-weblogs-teil-3/
+
+#Gzip
+<ifmodule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript text/javascript
+</ifmodule>
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(CONFIG|DATA).json$ - [NC,F,L]
+
+
+#FURLs
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+
+
+
+#canonicalization
+#RewriteCond %{HTTP_HOST} ^freizeitler\.de [NC]
+#RewriteRule ^(.*)$ http://www.freizeitler.de/$1 [L,R=301]
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*(default|index)\.(html|php|htm)\ HTTP/ [NC]
+#RewriteRule ^(([^/]+/)*)(default|main|index)\.(html|php|htm)$ http://www.freizeitler.de/$1 [L,R=301]
+
+
+

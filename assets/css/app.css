@@ -256,6 +256,10 @@ input.menu-category:focus + label {
 .teaser-section__icon-smiley {
   fill: #e4eaf1;
 }
+
+.teaser-section__icon-smiley--initial {
+  animation: spin 1.8s linear infinite;
+}
 /* line 103, ../patterns/organisms/category-section/scss/_category-section.scss */
 .teaser-section__more-label {
   position: absolute;
@@ -263,7 +267,7 @@ input.menu-category:focus + label {
   left: 0;
   width: auto;
   padding-right: 30px;
-  padding-left: 60px;
+  padding-left: 30px;
   font-weight: bold;
   padding-top: 4px;
   background-color: #e4eaf1;
@@ -278,6 +282,7 @@ input.menu-category:focus + label {
   left: 0;
   top: 0;
   margin: 0;
+  opacity: 0;
 }
 /* line 125, ../patterns/organisms/category-section/scss/_category-section.scss */
 .teaser-section__more-button.teaser-section__more-button:checked + .teaser-section__more {
@@ -370,6 +375,15 @@ input.menu-category:focus + label {
   }
   100% {
     max-width: 3em;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(1turn);
   }
 }
 /* line 31, ../patterns/organisms/message/scss/_message.scss */

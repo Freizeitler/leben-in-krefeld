@@ -4,8 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title itemprop="name">A-K Catalog</title>
+  <title itemprop="name">Leben in Krefeld</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- TODO: Put CSS here: -->
   <style type="text/css">
 
   </style>
@@ -14,13 +15,9 @@
 
 <body>
 
-
-
-
   <header class="header" role="banner">
     <h1 class="header__headline">Leben in Krefeld</h1>
   </header>
-
 
   <div class="app" role="tablist">
 
@@ -29,11 +26,9 @@
     <!--<input type="radio" name="category" id="category02" class="menu-category" role="tab" />
     <label for="category02" class="menu-category">&hellip;</label>-->
 
-
     <section class="message" id="jsMessage">
       <p class="message__text">Aktualisieren<span class="message__waiting">...</span> <span id="jsStatus" class="message__status">Sorry, I need JavaScript!</span></p>
     </section>
-
 
     <main class="main" role="main">
 
@@ -41,11 +36,9 @@
         <h2 class="category-section__headline">Aktuelle Familienveranstaltungen</h2>
 
         <div class="search-bar">
-          <label for="serach"><strong>Ich suche etwas Bestimmtes, nämlich&hellip;</strong></label><br>
+          <label for="serach"><strong>Ich suche Veranstaltungen mit dem BegriffSh&hellip;</strong></label><br>
           <input type="text" class="search-bar__input" id="search" placeholder="z. B.: Theater" value="" />
         </div>
-
-
 
         <svg class="symbol-container" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <defs>
@@ -57,235 +50,249 @@
         </svg>
 
         <div class="teaser-section" id="jsTeaserSpirituous">
-          <svg class="teaser-section__image teaser-section__icon-smiley" height="150" width="150"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-smiley"></use></svg>
+          <svg class="teaser-section__image teaser-section__icon-smiley teaser-section__icon-smiley--initial" height="150" width="150">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-smiley"></use>
+          </svg>
         </div>
       </section>
-
-
-      <section class="category-section category-section__02" id="jsSection2">
-        <h2 class="category-section__headline">Soft drinks</h2>
-
-        <input type="checkbox" name="category02-filter" id="category02-filter01" class="menu-category-filter" data-filter="one" />
-        <label for="category02-filter01">Beginner</label>
-        <input type="checkbox" name="category02-filter" id="category02-filter02" class="menu-category-filter" data-filter="two" />
-        <label for="category02-filter02">Advanced</label>
-
-        <div class="teaser-section" id="jsTeaserNonAlc">
-
-
-
-        </div>
-      </section>
-
 
     </main>
   </div>
 
   <script type="text/javascript">
-    // template engine
-    'use strict';
+    (function () {
+      // template engine
+      'use strict';
 
-    var httpRequest;
-    var targetMessage = document.getElementById('jsMessage');
+      var proxyUrl = 'proxy.php';
+      var targetMessage = document.getElementById('jsMessage');
+      var data;
+      var isDetail = false;
+      var detailTargetSpec;
+      var count = 1;
 
-    targetMessage.classList.add('hide');
+      targetMessage.classList.add('hide');
 
-    // make request
-    var makeRequest = function (url, callback) {
-      httpRequest = new XMLHttpRequest();
-    
-      httpRequest.open('GET', url, true);
-      //httpRequest.withCredentials = true;
-      httpRequest.onreadystatechange = callback;
-      //httpRequest.setRequestHeader('Authorization', '72205a2b-6619-4f5f-af50-ab1d4e87171e');
-      httpRequest.send();
+      // make request
+      function makeRequest(url, target) {
+        // count is, because i'm very desperate about readystate and status won't reset :/
+        count++;
+        var httpRequest = [];
+        console.log('makeRequest');
+        httpRequest[count] = new XMLHttpRequest();
 
-      console.log('makeRequest: ', httpRequest.readyState, httpRequest.status);
+        httpRequest[count].onload = function () {
+          if (httpRequest[count].readyState === 4) {
+            if (httpRequest[count].status === 200) {
+              var dataArr = JSON.parse(httpRequest[count].responseText);
+              data = dataArr.contents;
+              httpRequest[count].onreadystatechange = null;
+              console.log('request ok');
 
-      // fallback for httpRequest
-      if (!httpRequest) {
-        targetMessage.classList.remove('hide');
-        document.getElementById('jsStatus').textContent = 'Sorry, I need a connection!';
-        return false;
-      }
-
-      return httpRequest;
-    }
-
-    // insert teaser template
-    function insertTemplate(articleTarget, dataset, i) {
-      articleTarget.insertAdjacentHTML('afterbegin',
-        '<article class="teaser-section__teaser" data-tag="' + dataset.id + '" data-id="' + dataset.id + '">' +
-        setImage(dataset) +
-        '<div  class="teaser-section__text search-content">' +
-        '<h3 class="teaser-section__headline">' + dataset.title + '</h3>' +
-        '<p class="teaser-section__tags"><strong>Art der Veranstaltung:</strong> <em>' + getTags(dataset) + '</em></p>' +
-        formatDate(dataset) +
-        '<p class="teaser-section__description">' + dataset.description + '</p>' +
-        '<label for="learn-more' + i + '" class="teaser-section__more-label js-more-details" onclick="clickDetails(\'' + dataset.infoUrl.toString() + '\', \'js-more-details-target' + dataset.id + '\');">Mehr darüber</label>' +
-        '<input type="checkbox" class="teaser-section__more-button" name="learn-more' + i + '" id="learn-more' + i + '" />' +
-        '<dl class="teaser-section__more">' +
-        // more details here:
-        '<dt>Weitere Infos:</dt>' +
-        '<dd class="js-more-details-target' + dataset.id + '"></dd>' +
-        '</dl>' +
-        '</div>' +
-        '</article>'
-      );
-    }
-
-    // insert detail template
-    function insertDetailTemplate(detailTarget, detailDataset) {
-      console.log('--- more infos template! ---');
-       detailTarget.innerHTML =
-        '<dl>' +
-        '<dt>Wo wird veranstaltet?</dt>' +
-        '<dd>' + detailDataset.LocationName + ', ' + detailDataset.LocationStreetAddress + ', ' + detailDataset.LocationZIP + ' ' + detailDataset.locationCity + '</dd>' +
-        '<dt>Wer veranstaltet?</dt>' +
-        '<dd>' + detailDataset.VeranstalterName + ', ' + detailDataset.VeranstalterEMail + ', <a href="' + detailDataset.VeranstalterWebSite + '" title="Zur Website des Veranstalters">' + detailDataset.VeranstalterWebSite + '</a></dd>' +
-        '</dl>'
-      ;
-    }
-
-    // TODO: fetch and generate Details
-    function generateDetails(detailTarget) {
-      console.log('generateDeatils: ', httpRequest.readyState, httpRequest.status);
-
-      if (httpRequest.readyState === httpRequest.DONE) {
-        if (httpRequest.status === 200) {
-          var detailData = JSON.parse(httpRequest.responseText);
-          var detailTargetSpec = document.getElementsByClassName(detailTarget);
-
-          var detailDataset = {
-            locationCity: detailData.LocationCity || 'Keine Angaben',
-            // locationCity: detailData[0].DocName || 'Keine Angaben',
-            LocationName: detailData.LocationName || 'Keine Angaben',
-            LocationStreetAddress: detailData.LocationStreetAddress || 'Keine Angaben',
-            LocationZIP: detailData.LocationZIP || 'Keine Angaben',
-            VeranstalterName: detailData.VeranstalterName || 'Keine Angaben',
-            VeranstalterEMail: detailData.VeranstalterEMail || 'Keine Angaben',
-            VeranstalterWebSite: detailData.VeranstalterWebSite || 'Keine Angaben'
-          };
-
-          insertDetailTemplate(detailTargetSpec[0], detailDataset);
-
-        } else {
-          targetMessage.classList.remove('hide');
-          document.getElementById('jsStatus').textContent = 'JavaScript ist deaktiviert?';
-          return false;
-        }
-      }
-    }
-
-    // generate main content
-    function generateContents() {
-      console.log('generateContents: ', httpRequest.readyState, httpRequest.status);
-
-      if (httpRequest.readyState === httpRequest.DONE) {
-        if (httpRequest.status === 200) {
-          var data = JSON.parse(httpRequest.responseText);
-          var dataset;
-          var articleTarget = document.getElementById('jsTeaserSpirituous');
-
-          document.getElementById('jsTeaserSpirituous').innerHTML = '';
-          document.getElementById('jsTeaserNonAlc').innerHTML = '';
-
-          for (var i = 0; i < data.length; i++) {
-            dataset = {
-              id: data[i]['@unid'],
-              startdate: data[i].Start || 'Keine Angaben',
-              enddate: data[i].End || 'Keine Angaben',
-              title: data[i].DocName || '-',
-              subtitle: data[i].EventSubTitle || '-',
-              description: data[i].Kurztext || '-',
-              infoUrl: 'https://crossorigin.me/https://www.krefeld.de/' + data[i].URL || '#',
-              thumb: data[i].Thumb,
-              startDate: data[i].Start || 'unbekannt',
-              endDate: data[i].End || 'unbekannt',
-              tags: data[i].EventType || 'Keine Tags'
-            };
-            insertTemplate(articleTarget, dataset, i);
+              if (isDetail === true) {
+                generateDetails(target);
+              } else {
+                generateContents();
+              }
+            } else {
+              targetMessage.classList.remove('hide');
+              document.getElementById('jsStatus').textContent = 'Keine Verbindung :(';
+              return false;
+            }
           }
-          targetMessage.classList.add('hide');
+        }
 
-        } else {
+        // fallback for httpRequest
+        if (!httpRequest[count]) {
           targetMessage.classList.remove('hide');
           document.getElementById('jsStatus').textContent = 'Es konnte keine Verbindung aufgebaut werden!';
           return false;
         }
+
+        httpRequest[count].open('GET', proxyUrl + '?url=' + url, true);
+        httpRequest[count].setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        httpRequest[count].send();
       }
-    }
 
-    // click for details
-    function clickDetails(detailUrl, detailTarget) {
-      makeRequest('' + detailUrl + '', generateDetails(detailTarget));
-    };
+      // insert teaser template
+      function insertTemplate(articleTarget, dataset, i) {
+        articleTarget.insertAdjacentHTML('afterbegin',
+          '<article class="teaser-section__teaser" data-tag="' + dataset.id + '" data-id="' + dataset.id + '">' +
+          setImage(dataset) +
+          '<div  class="teaser-section__text search-content">' +
+          '<h3 class="teaser-section__headline">' + dataset.title + '</h3>' +
+          '<p class="teaser-section__tags"><strong>Art der Veranstaltung:</strong> <em>' + getTags(dataset) +
+          '</em></p>' +
+          formatDate(dataset) +
+          '<p class="teaser-section__description">' + dataset.description + '</p>' +
+          '<label for="learn-more' + i +
+          '" class="teaser-section__more-label js-more-details" data-url="' + dataset.infoUrl.toString() +
+          '" data-id="' + dataset.id + '">Mehr darüber</label>' +
+          '<input type="checkbox" class="teaser-section__more-button" name="learn-more' + i + '" id="learn-more' +
+          i +
+          '" />' +
+          '<div class="teaser-section__more">' +
+          // more details here:
+          '<div class="js-more-details-target' + dataset.id + '"></div>' +
+          '</div>' +
+          '</div>' +
+          '</article>'
+        );
+      }
 
-    // live search
-    function liveSearch() {
-      var search = document.getElementById('search');
-      search.onkeyup = function () {
-        var filter = search.value.toUpperCase();
-        var lis = document.getElementsByTagName('article');
-        for (var i = 0; i < lis.length; i++) {
-          var target = lis[i].getElementsByClassName('search-content')[0];
-          var content = target.textContent;
-          if (content.toUpperCase().indexOf(filter) > -1) {
-            lis[i].style.display = 'block';
-          } else {
-            lis[i].style.display = 'none';
+      // insert detail template
+      function insertDetailTemplate(detailDataset) {
+        detailTargetSpec[0].innerHTML =
+          '<dl>' +
+          '<dt>Wo wird veranstaltet?</dt>' +
+          '<dd>' + detailDataset.LocationName + ', ' + detailDataset.LocationStreetAddress + ', ' + detailDataset.LocationZIP +
+          ' ' + detailDataset.locationCity + '</dd>' +
+          '<dt>Wer veranstaltet?</dt>' +
+          '<dd>' + detailDataset.VeranstalterName + ', ' + detailDataset.VeranstalterEMail + ', <a href="' +
+          detailDataset.VeranstalterWebSite + '" title="Zur Website des Veranstalters">' + detailDataset.VeranstalterWebSite +
+          '</a></dd>' +
+          '</dl>';
+      }
+
+      // generate main content
+      function generateContents() {
+        var dataset;
+        var articleTarget = document.getElementById('jsTeaserSpirituous');
+
+        console.log('callback');
+
+        isDetail = false;
+        document.getElementById('jsTeaserSpirituous').innerHTML = '';
+
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+          dataset = {
+            id: data[i]['@unid'],
+            title: data[i].DocName || '-',
+            subtitle: data[i].EventSubTitle || '-',
+            description: data[i].Kurztext || '-',
+            infoUrl: 'https://www.krefeld.de/' + data[i].URL || '#',
+            thumb: data[i].Thumb,
+            startDate: data[i].Start || 'unbekannt',
+            endDate: data[i].End || 'unbekannt',
+            tags: data[i].EventType || 'Keine Tags'
+          };
+          insertTemplate(articleTarget, dataset, i);
+        }
+        targetMessage.classList.add('hide');
+      }
+
+      // TODO: fetch and generate Details
+      function generateDetails(detailTarget) {
+        var detailData = data;
+        detailTargetSpec = document.getElementsByClassName(detailTarget);
+
+        console.log('callback');
+
+        var detailDataset = {
+          locationCity: detailData.LocationCity || 'Keine Angaben',
+          // locationCity: detailData[0].DocName || 'Keine Angaben',
+          LocationName: detailData.LocationName || 'Keine Angaben',
+          LocationStreetAddress: detailData.LocationStreetAddress || 'Keine Angaben',
+          LocationZIP: detailData.LocationZIP || 'Keine Angaben',
+          VeranstalterName: detailData.VeranstalterName || 'Keine Angaben',
+          VeranstalterEMail: detailData.VeranstalterEMail || 'Keine Angaben',
+          VeranstalterWebSite: detailData.VeranstalterWebSite || 'Keine Angaben'
+        };
+
+        insertDetailTemplate(detailDataset);
+      }
+
+      // detect if element has class
+      function hasClass(elem, className) {
+        return elem.className.split(' ').indexOf(className) > -1;
+      }
+
+      // click for details
+      function clickDetails(detailUrl, detailTarget) {
+        //isDetail = true;
+        // TODO: Callback gets executed as param, maybe better like so: https://stackoverflow.com/questions/3458553/javascript-passing-parameters-to-a-callback-function
+        this.setAttribute('hidden');
+        var newRequest = new makeRequest('' + detailUrl + '',  detailTarget);
+      };
+
+      document.addEventListener('click', function (e) {
+        if (hasClass(e.target, 'js-more-details')) {
+          var detailUrl = e.target.dataset.url;
+          var detailTargetId = e.target.dataset.id;
+          isDetail = true;
+          console.log(detailUrl + ' | ' + detailTargetId);
+          clickDetails(detailUrl, 'js-more-details-target' + detailTargetId);
+          //var newRequest = new makeRequest('' + detailUrl + '', detailTarget);
+        }
+      }, false);
+
+      // live search
+      function liveSearch() {
+        var search = document.getElementById('search');
+        search.onkeyup = function () {
+          var filter = search.value.toUpperCase();
+          var lis = document.getElementsByTagName('article');
+          for (var i = 0; i < lis.length; i++) {
+            var target = lis[i].getElementsByClassName('search-content')[0];
+            var content = target.textContent;
+            if (content.toUpperCase().indexOf(filter) > -1) {
+              lis[i].style.display = 'block';
+            } else {
+              lis[i].style.display = 'none';
+            }
           }
         }
-      }
-    };
+      };
 
-    function getTags(dataset) {
-      var allTags = dataset.tags.toString();
-      return allTags;
-    };
+      function getTags(dataset) {
+        var allTags = dataset.tags.toString();
+        return allTags;
+      };
 
-    function setImage(dataset) {
-      if (dataset.thumb === '') {
-        return (
-          '<svg class="teaser-section__image teaser-section__icon-smiley" height="150" width="150"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-smiley"></use></svg>'
-        )
-      } else {
-        return (
-          '<img class="teaser-section__image" width="150" height="150" src="' + dataset.thumb + '" alt="" />'
-        )
-      }
-    }
-
-    function formatDate(dataset) {
-      var newDate;
-      var startDateRaw = dataset.startDate;
-      var endDateRaw = dataset.endDate;
-      var startDate;
-      var endDate;
-
-      if (startDateRaw !== 'unbekannt') {
-        var tempDateStart = startDateRaw.split('-');
-        var tempDateDayStart = tempDateStart[2].split('T');
-        startDate = tempDateDayStart[0] + '.' + tempDateStart[1] + '.' + tempDateStart[0];
-      } else {
-        startDate = '(keine Angabe)';
+      function setImage(dataset) {
+        if (dataset.thumb === '') {
+          return (
+            '<svg class="teaser-section__image teaser-section__icon-smiley" height="150" width="150"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-smiley"></use></svg>'
+          )
+        } else {
+          return (
+            '<img class="teaser-section__image" width="150" height="150" src="' + dataset.thumb + '" alt="" />'
+          )
+        }
       }
 
-      if (endDateRaw !== 'unbekannt') {
-        var tempDateEnd = endDateRaw.split('-');
-        var tempDateDayEnd = tempDateEnd[2].split('T');
-        endDate = tempDateDayEnd[0] + '.' + tempDateEnd[1] + '.' + tempDateEnd[0];
-        newDate = '<p>Vom <strong>' + startDate + '</strong> bis <strong>' + endDate + '</strong></p>';
-      } else {
-        newDate = '<p>Am <strong>' + startDate + '</strong></p>';
+      function formatDate(dataset) {
+        var newDate;
+        var startDateRaw = dataset.startDate;
+        var endDateRaw = dataset.endDate;
+        var startDate;
+        var endDate;
+
+        if (startDateRaw !== 'unbekannt') {
+          var tempDateStart = startDateRaw.split('-');
+          var tempDateDayStart = tempDateStart[2].split('T');
+          startDate = tempDateDayStart[0] + '.' + tempDateStart[1] + '.' + tempDateStart[0];
+        } else {
+          startDate = '(keine Angabe)';
+        }
+
+        if (endDateRaw !== 'unbekannt') {
+          var tempDateEnd = endDateRaw.split('-');
+          var tempDateDayEnd = tempDateEnd[2].split('T');
+          endDate = tempDateDayEnd[0] + '.' + tempDateEnd[1] + '.' + tempDateEnd[0];
+          newDate = '<p>Vom <strong>' + startDate + '</strong> bis <strong>' + endDate + '</strong></p>';
+        } else {
+          newDate = '<p>Am <strong>' + startDate + '</strong></p>';
+        }
+        return newDate;
       }
-      return newDate;
-    }    
 
-    // Init
-    makeRequest('https://crossorigin.me/https://www.krefeld.de/www/event.nsf/apijson.xsp/view-event-month?compact=true', generateContents);
-    liveSearch();
-
+      // Init (url without proxy!)
+      var initialRequest = new makeRequest(
+        'https://www.krefeld.de/www/event.nsf/apijson.xsp/view-event-month?compact=true');
+      liveSearch();
+    })();
   </script>
 
 
